@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pranav Bhardhwaj — Senior Data Analyst</title>
+<meta name="description" content="Pranav Bhardhwaj — Senior Data Analyst. eDiscovery, digital forensics, SQL automation, and data governance across Consilio and Barclays." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0F1E;
+    --ink-2:#111628;
+    --ink-3:#1A2038;
+    --paper:#F0F2F9;
+    --orange:#FF8A4C;
+    --orange-dim:rgba(255,138,76,0.15);
+    --cyan:#2DD4E0;
+    --cyan-dim:rgba(45,212,224,0.12);
+    --coral:#FF5D73;
+    --coral-dim:rgba(255,93,115,0.12);
+    --slate:#7B82A8;
+    --line:rgba(255,255,255,0.06);
+    --line-hover:rgba(255,255,255,0.12);
+    --glow-orange:0 0 40px rgba(255,138,76,0.15);
+    --glow-cyan:0 0 40px rgba(45,212,224,0.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Sora',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:var(--cyan);text-decoration:none;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 28px;}
+
+  /* --- ANIMATED MESH BACKGROUND --- */
+  .mesh-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .mesh-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:0.4;
+    animation:float 20s ease-in-out infinite;
+  }
+  .mesh-orb:nth-child(1){width:500px;height:500px;background:var(--orange);top:-10%;left:-10%;animation-delay:0s;}
+  .mesh-orb:nth-child(2){width:400px;height:400px;background:var(--cyan);top:20%;right:-5%;animation-delay:-5s;opacity:0.25;}
+  .mesh-orb:nth-child(3){width:350px;height:350px;background:var(--coral);bottom:10%;left:20%;animation-delay:-10s;opacity:0.2;}
+  .mesh-orb:nth-child(4){width:300px;height:300px;background:var(--orange);bottom:30%;right:30%;animation-delay:-15s;opacity:0.15;}
+  @keyframes float{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(30px,-30px) scale(1.1);}
+    66%{transform:translate(-20px,20px) scale(0.95);}
+  }
+
+  /* --- NOISE OVERLAY --- */
+  .noise{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    opacity:0.03;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat:repeat;
+    background-size:256px;
+  }
+
+  /* --- NAV --- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    backdrop-filter:blur(20px) saturate(1.2);
+    background:rgba(11,15,30,0.7);
+    border-bottom:1px solid var(--line);
+    transition:all 0.4s ease;
+  }
+  nav.scrolled{background:rgba(11,15,30,0.92);border-bottom-color:var(--line-hover);}
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;}
+  .nav-id{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--orange);letter-spacing:0.08em;
+    padding:6px 14px;border:1px solid rgba(255,138,76,0.3);border-radius:4px;
+    background:rgba(255,138,76,0.05);
+    transition:all 0.3s ease;
+  }
+  .nav-id:hover{background:rgba(255,138,76,0.12);box-shadow:0 0 20px rgba(255,138,76,0.2);}
+  .nav-links{display:flex;gap:28px;font-size:13.5px;}
+  .nav-links a{
+    color:var(--slate);text-decoration:none;transition:all 0.25s ease;
+    position:relative;padding:4px 0;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;
+    background:linear-gradient(90deg,var(--orange),var(--cyan));border-radius:2px;
+    transition:width 0.3s ease;
+  }
+  .nav-links a:hover{color:var(--paper);}
+  .nav-links a:hover::after{width:100%;}
+
+  /* --- HERO --- */
+  .hero{
+    min-height:100vh;padding:160px 0 100px;position:relative;overflow:hidden;
+    display:flex;align-items:center;
+  }
+  .hero .wrap{position:relative;z-index:2;}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:0.14em;color:var(--cyan);text-transform:uppercase;
+    padding:8px 18px;border-radius:100px;
+    background:linear-gradient(135deg,rgba(45,212,224,0.1),rgba(45,212,224,0.02));
+    border:1px solid rgba(45,212,224,0.25);margin-bottom:32px;
+    animation:fadeInUp 0.8s ease forwards;opacity:0;
+  }
+  .hero-badge::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);
+    box-shadow:0 0 10px var(--cyan);animation:pulse 2s ease infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  h1.name{
+    font-size:clamp(48px,8vw,78px);font-weight:800;margin:0 0 10px;
+    letter-spacing:-0.03em;line-height:1.0;
+    background:linear-gradient(135deg,var(--paper) 0%,var(--slate) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    animation:fadeInUp 0.8s ease 0.1s forwards;opacity:0;
+  }
+  .role{
+    font-size:clamp(18px,2.6vw,24px);color:var(--orange);font-weight:500;margin:0 0 28px;
+    animation:fadeInUp 0.8s ease 0.2s forwards;opacity:0;
+  }
+  .lede{
+    max-width:680px;color:var(--slate);font-size:18px;margin-bottom:40px;line-height:1.7;
+    animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;
+  }
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;animation:fadeInUp 0.8s ease 0.4s forwards;opacity:0;}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.02em;
+    padding:14px 26px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+    transition:all 0.3s ease;position:relative;overflow:hidden;border:none;cursor:pointer;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--orange),#FF6B3D);color:var(--ink);font-weight:600;
+    box-shadow:0 4px 20px rgba(255,138,76,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(255,138,76,0.4),inset 0 1px 0 rgba(255,255,255,0.3);}
+  .btn-ghost{
+    background:rgba(255,255,255,0.03);color:var(--paper);border:1px solid var(--line);
+    backdrop-filter:blur(10px);
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,0.08);border-color:var(--line-hover);transform:translateY(-3px);box-shadow:0 4px 20px rgba(45,212,224,0.1);}
+
+  /* --- SCROLL REVEAL --- */
+  .reveal{opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1);}
+  .reveal.active{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:0.1s;}
+  .reveal-delay-2{transition-delay:0.2s;}
+  .reveal-delay-3{transition-delay:0.3s;}
+  .reveal-delay-4{transition-delay:0.4s;}
+
+  /* --- SECTIONS --- */
+  section{padding:100px 0;position:relative;z-index:2;}
+  section::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--line-hover),transparent);
+  }
+  .section-header{margin-bottom:60px;}
+  .section-overline{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.2em;
+    color:var(--orange);text-transform:uppercase;margin-bottom:14px;display:block;
+  }
+  h2.section-title{
+    font-size:clamp(32px,4vw,44px);font-weight:700;margin:0 0 18px;
+    background:linear-gradient(135deg,var(--paper) 60%,var(--cyan) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    letter-spacing:-0.02em;
+  }
+  .section-intro{max-width:640px;color:var(--slate);font-size:17px;line-height:1.7;}
+
+  /* --- ABOUT --- */
+  .about-body{max-width:720px;font-size:17.5px;color:#B8BDD6;line-height:1.85;margin-bottom:24px;}
+  .about-body strong{color:var(--paper);font-weight:600;}
+  .about-body em{color:var(--cyan);font-style:normal;}
+
+  /* --- WHY CARDS --- */
+  .why-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:760px;}
+  .why-item{
+    display:flex;align-items:flex-start;gap:18px;
+    background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+    border:1px solid var(--line);border-radius:14px;
+    padding:24px 28px;font-size:16px;color:#B8BDD6;
+    transition:all 0.4s ease;position:relative;overflow:hidden;
+  }
+  .why-item::before{
+    content:'';position:absolute;left:0;top:0;width:3px;height:100%;
+    background:linear-gradient(180deg,var(--orange),var(--cyan));opacity:0;transition:opacity 0.3s ease;
+  }
+  .why-item:hover{
+    transform:translateX(8px);border-color:rgba(255,138,76,0.3);
+    background:linear-gradient(135deg,rgba(255,138,76,0.05),rgba(45,212,224,0.03));
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+  }
+  .why-item:hover::before{opacity:1;}
+  .why-check{
+    color:var(--cyan);font-size:22px;line-height:1;flex-shrink:0;margin-top:2px;
+    text-shadow:0 0 12px rgba(45,212,224,0.4);
+  }
+  .why-item strong{color:var(--paper);font-weight:600;}
+
+  /* --- ACHIEVEMENT CARDS --- */
+  .grid-achieve{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+  .card{
+    background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+    border:1px solid var(--line);border-radius:16px;
+    padding:32px;position:relative;overflow:hidden;
+    transition:all 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);opacity:0;transition:opacity 0.3s ease;
+  }
+  .card:hover{
+    transform:translateY(-8px) scale(1.01);
+    border-color:rgba(255,138,76,0.25);
+    box-shadow:0 20px 60px rgba(0,0,0,0.4),var(--glow-orange);
+  }
+  .card:hover::before{opacity:1;}
+  .metric{
+    font-family:'JetBrains Mono',monospace;font-size:32px;color:var(--cyan);font-weight:700;margin-bottom:10px;display:block;
+    text-shadow:0 0 20px rgba(45,212,224,0.3);letter-spacing:-0.02em;
+  }
+  .card .card-title{color:var(--paper);font-weight:600;font-size:17px;margin-bottom:10px;display:block;line-height:1.4;}
+  .card p{color:var(--slate);font-size:15px;margin:0;line-height:1.65;}
+  .tool-tag{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--orange);background:rgba(255,138,76,0.08);border:1px solid rgba(255,138,76,0.2);
+    padding:4px 10px;border-radius:6px;margin-top:16px;margin-right:8px;letter-spacing:0.02em;
+    transition:all 0.2s ease;
+  }
+  .tool-tag:hover{background:rgba(255,138,76,0.15);transform:translateY(-2px);}
+
+  /* --- SKILLS --- */
+  .skills-visual{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media(max-width:640px){.skills-visual{grid-template-columns:1fr;}}
+  .skill-block{
+    background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+    border:1px solid var(--line);border-radius:16px;padding:28px;
+    transition:all 0.4s ease;
+  }
+  .skill-block:hover{border-color:rgba(45,212,224,0.2);box-shadow:0 10px 40px rgba(0,0,0,0.25);}
+  .skill-block-title{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--orange);
+    letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;
+  }
+  .skill-block-title::before{
+    content:'';width:8px;height:8px;border-radius:2px;background:var(--orange);box-shadow:0 0 8px var(--orange);
+  }
+  .skill-block-body{color:#B8BDD6;font-size:15px;line-height:1.7;}
+  .skill-block-body span{display:inline-block;padding:3px 0;}
+  .skill-block-body span:not(:last-child)::after{content:'·';margin:0 8px;color:var(--slate);opacity:0.5;}
+
+  /* --- TIMELINE --- */
+  .timeline{position:relative;padding-left:36px;}
+  .timeline::before{
+    content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;
+    background:linear-gradient(180deg,var(--orange),var(--cyan),var(--coral),transparent);opacity:0.4;
+  }
+  .tl-item{position:relative;margin-bottom:48px;}
+  .tl-item::before{
+    content:"";position:absolute;left:-36px;top:4px;width:14px;height:14px;border-radius:50%;
+    background:var(--ink);border:2px solid var(--cyan);box-shadow:0 0 0 4px rgba(45,212,224,0.1),0 0 20px rgba(45,212,224,0.3);
+    transition:all 0.3s ease;
+  }
+  .tl-item:hover::before{box-shadow:0 0 0 6px rgba(45,212,224,0.15),0 0 30px rgba(45,212,224,0.5);border-color:var(--orange);}
+  .tl-date{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--orange);letter-spacing:0.06em;margin-bottom:6px;
+    display:inline-block;padding:4px 12px;background:rgba(255,138,76,0.08);border-radius:4px;border:1px solid rgba(255,138,76,0.15);
+  }
+  .tl-role{font-weight:600;font-size:18px;margin-bottom:6px;color:var(--paper);}
+  .tl-org{color:var(--cyan);font-size:14.5px;margin-bottom:12px;}
+  .tl-body{color:#B8BDD6;font-size:15.5px;max-width:640px;line-height:1.75;}
+  .tl-body ul{margin:10px 0 0;padding-left:20px;}
+  .tl-body li{margin-bottom:8px;position:relative;}
+  .tl-body li::marker{color:var(--orange);}
+
+  /* --- BEYOND --- */
+  .grid-beyond{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+  .beyond-card{
+    background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+    border:1px solid var(--line);border-radius:16px;
+    padding:28px;position:relative;overflow:hidden;
+    transition:all 0.5s cubic-bezier(0.16,1,0.3,1);
+    border-top:3px solid var(--accent,var(--cyan));
+  }
+  .beyond-card::after{
+    content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+    background:radial-gradient(circle at center,var(--accent),transparent 70%);opacity:0;transition:opacity 0.4s ease;
+  }
+  .beyond-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.1);box-shadow:0 20px 50px rgba(0,0,0,0.35);}
+  .beyond-card:hover::after{opacity:0.06;}
+  .beyond-icon{font-size:32px;margin-bottom:14px;display:block;position:relative;z-index:1;}
+  .beyond-title{color:var(--paper);font-weight:600;font-size:17px;margin-bottom:8px;display:block;position:relative;z-index:1;}
+  .beyond-sub{color:var(--slate);font-size:14.5px;margin:0;position:relative;z-index:1;line-height:1.6;}
+
+  /* --- CONTACT --- */
+  .contact-card{
+    background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+    border:1px solid var(--line);border-radius:20px;padding:48px;
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .contact-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,var(--orange),var(--cyan),var(--coral),var(--orange));opacity:0.3;
+  }
+  .contact-links{display:flex;flex-direction:column;gap:14px;font-size:16px;position:relative;z-index:1;}
+  .contact-links a{
+    color:var(--paper);text-decoration:none;display:flex;align-items:center;gap:12px;
+    transition:all 0.3s ease;padding:8px 0;
+  }
+  .contact-links a:hover{color:var(--cyan);transform:translateX(6px);}
+  .contact-links a .link-icon{
+    width:36px;height:36px;border-radius:10px;
+    background:rgba(255,255,255,0.05);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+    transition:all 0.3s ease;
+  }
+  .contact-links a:hover .link-icon{background:rgba(45,212,224,0.1);border-color:rgba(45,212,224,0.3);}
+  .stamp{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--orange);
+    border:1px solid rgba(255,138,76,0.4);padding:10px 18px;border-radius:6px;letter-spacing:0.08em;
+    transform:rotate(-3deg);white-space:nowrap;position:relative;z-index:1;
+    background:rgba(255,138,76,0.05);box-shadow:0 0 20px rgba(255,138,76,0.1);
+  }
+
+  footer{padding:40px 0 60px;color:var(--slate);font-size:13px;text-align:center;position:relative;z-index:2;}
+  footer::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--line-hover),transparent);
+  }
+
+  /* --- KEYFRAMES --- */
+  @keyframes fadeInUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+
+  /* --- MOBILE --- */
+  @media(max-width:640px){
+    .hero{padding:120px 0 60px;}
+    .nav-links{display:none;}
+    .skills-visual{grid-template-columns:1fr;}
+    .grid-achieve{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Animated Mesh Background -->
+<div class="mesh-bg">
+  <div class="mesh-orb"></div>
+  <div class="mesh-orb"></div>
+  <div class="mesh-orb"></div>
+  <div class="mesh-orb"></div>
+</div>
+<div class="noise"></div>
+
+<nav id="navbar">
+  <div class="wrap">
+    <span class="nav-id">PB // CASE FILE</span>
+    <div class="nav-links">
+      <a href="#about">Story</a>
+      <a href="#why">Why Me</a>
+      <a href="#achievements">Highlights</a>
+      <a href="#projects">Builds</a>
+      <a href="#skills">Toolkit</a>
+      <a href="#timeline">Path</a>
+      <a href="#beyond">Beyond</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-badge">Available for Opportunities</div>
+    <h1 class="name">Pranav Bhardhwaj</h1>
+    <p class="role">Senior Data Analyst | Data Processing and Analysis | Ediscovery Consulting</p>
+    <p class="lede">
+      Senior Data Analyst specializing in enterprise data operations, workflow automation, and end-to-end eDiscovery consulting. I build scalable solutions that improve data quality, reduce manual effort, and support business-critical decisions across regulated environments.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#contact">Start a Conversation</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/pranav-bhardhwaj-57a05a179/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href="D:\Study Materials\Resume_Folder\Pranav_Resume_A_IAM_V1.pdf" download>Download Resume ↓</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">The Beginning</span>
+      <h2 class="section-title">The Story So Far</h2>
+      <p class="section-intro">Five years ago, I started as a Data Operations Associate. Today, I lead enterprise investigations and build tools that save teams hundreds of hours. Here is how that happened.</p>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <p class="about-body">
+        I work at the intersection of <strong>digital forensics</strong> and <strong>data analytics</strong> —
+        collecting, processing, and querying data at a scale where a single oversight can become a very expensive mistake. Over 5+ years at <strong>Consilio LLC</strong>, including a client secondment supporting Barclays' enterprise data collection function, I have built a reputation for spotting process inefficiencies, data-quality issues, and automation opportunities before they spiral. I caught a duplicate-ingestion issue that had inflated a dataset to 4TB — reducing it to 500GB and cutting downstream processing time and review cost before it reached the review stage. I eliminated a manual renaming process that was quietly costing the team hours every week. When our commercial file-transfer solution could not meet operational requirements, I built an internal Robocopy wrapper and later transformed it into a production-ready C# WinForms application with multithreading, pause/resume, ETA estimation, and automated reporting.
+      </p>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <p class="about-body">
+        I am comfortable owning ambiguous data problems end-to-end — SQL and Excel for the mechanics,
+        clear documentation for the audit trail, and enough cross-functional coordination to get
+        global stakeholders aligned on the fix.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">The Difference</span>
+      <h2 class="section-title">Why Teams Bring Me In</h2>
+      <p class="section-intro">When I join a project, the goal is not just to complete the task — it is to leave the process better than I found it.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal reveal-delay-1">
+        <span class="why-check">✔</span>
+        <span>I simplify <strong>complex data workflows</strong> through automation.</span>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <span class="why-check">✔</span>
+        <span>I identify <strong>data quality issues</strong> before they impact downstream processes.</span>
+      </div>
+      <div class="why-item reveal reveal-delay-3">
+        <span class="why-check">✔</span>
+        <span>I bridge <strong>technical teams, legal stakeholders, and project managers</strong>.</span>
+      </div>
+      <div class="why-item reveal reveal-delay-1">
+        <span class="why-check">✔</span>
+        <span>I build <strong>practical tools</strong> instead of relying solely on manual processes.</span>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <span class="why-check">✔</span>
+        <span>I deliver <strong>enterprise data solutions</strong> that meet regulatory and audit requirements.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">Impact</span>
+      <h2 class="section-title">Moments That Mattered</h2>
+      <p class="section-intro">These are not just metrics. They are the moments where paying attention to the details changed the outcome of an entire matter.</p>
+    </div>
+    <div class="grid-achieve">
+      <div class="card reveal reveal-delay-1">
+        <span class="metric">4TB → 500GB</span>
+        <span class="card-title">Caught a duplication bug pre-processing</span>
+        <p>Identified duplicate data copied by a technician before ingestion — avoided unnecessary
+        processing cost and downstream review time on the matter.</p>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <span class="metric">400 custodians</span>
+        <span class="card-title">Automated custodian relabeling with one SQL query</span>
+        <p>Replaced a fully manual renaming process by mapping generic custodian values to PST
+        file names in a single batch query.</p>
+      </div>
+      <div class="card reveal reveal-delay-3">
+        <span class="metric">Built, not bought</span>
+        <span class="card-title">Robocopy wrapper → full C# WinForms tool</span>
+        <p>Built an internal alternative to FastCopy for network-to-network transfers; grew it into a
+        parallel-job file-copy application with pause/resume and automated HTML/CSV reporting.</p>
+      </div>
+      <div class="card reveal reveal-delay-4">
+        <span class="metric">Veritas vs. Global Relay</span>
+        <span class="card-title">Parallel-run platform testing at Barclays</span>
+        <p>Compared output between the incumbent and newly adopted collection platforms, documenting
+        discrepancies to inform the bank's migration decision — plus a first-of-its-kind test of
+        Purview's handling of Copilot-generated data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">Builds</span>
+      <h2 class="section-title">What I Have Built</h2>
+      <p class="section-intro">Every tool here started with a real problem I faced on the floor. I do not list technologies for effect — these are the actual tools I used to solve the actual problem.</p>
+    </div>
+    <div class="grid-achieve">
+      <div class="card reveal reveal-delay-1">
+        <span class="card-title">Custodian Relabeling Automation</span>
+        <p>Replaced a manual 400-custodian renaming process with a single SQL batch query designed in SSMS, mapping generic values to PST file names with Excel for validation — eliminating human error and saving hours per matter.</p>
+        <span class="tool-tag">SQL</span>
+        <span class="tool-tag">SSMS</span>
+        <span class="tool-tag">Excel</span>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <span class="card-title">Enterprise File Transfer Suite</span>
+        <p>Engineered an internal replacement for commercial transfer tools using a Robocopy wrapper, then evolved it into a production C# WinForms app with multithreading, pause/resume, ETA estimation, and automated HTML/CSV reporting.</p>
+        <span class="tool-tag">C#</span>
+        <span class="tool-tag">PowerShell</span>
+        <span class="tool-tag">Robocopy</span>
+      </div>
+      <div class="card reveal reveal-delay-3">
+        <span class="card-title">Platform Migration Analytics & Reporting</span>
+        <p>Executed a parallel-run comparison between Veritas Discovery Accelerator and Global Relay at Barclays, documenting collection discrepancies in Excel and Word to inform the bank's migration strategy.</p>
+        <span class="tool-tag">Excel</span>
+        <span class="tool-tag">Word</span>
+      </div>
+      <div class="card reveal reveal-delay-4">
+        <span class="card-title">Data Quality Monitoring</span>
+        <p>Developed CMD-based MD5 hash validation scripts to catch pre-processing anomalies — including a duplicate-ingestion issue that had inflated a dataset to 4TB — before data entered downstream review, protecting matter integrity and controlling costs.</p>
+        <span class="tool-tag">CMD</span>
+        <span class="tool-tag">SQL</span>
+        <span class="tool-tag">Nuix</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">Arsenal</span>
+      <h2 class="section-title">The Toolkit</h2>
+      <p class="section-intro">These are the tools I reach for daily. Not every tool on every project — but every tool has earned its place through repeated use.</p>
+    </div>
+    <div class="skills-visual">
+      <div class="skill-block reveal reveal-delay-1">
+        <div class="skill-block-title">Querying & Programming</div>
+        <div class="skill-block-body">
+          <span>SQL (SSMS, MySQL)</span><span>Python</span><span>KQL</span><span>PowerShell</span><span>CMD</span>
+        </div>
+      </div>
+      <div class="skill-block reveal reveal-delay-2">
+        <div class="skill-block-title">Data & BI</div>
+        <div class="skill-block-body">
+          <span>Excel (Advanced)</span><span>Power BI</span><span>Tableau</span><span>Pivot Tables</span>
+        </div>
+      </div>
+      <div class="skill-block reveal reveal-delay-1">
+        <div class="skill-block-title">eDiscovery & Forensics</div>
+        <div class="skill-block-body">
+          <span>Nuix</span><span>Relativity</span><span>Sightline</span><span>Aurora</span><span>EnCase</span><span>FTK Imager</span><span>Cellebrite</span><span>Passware</span><span>ICE</span>
+        </div>
+      </div>
+      <div class="skill-block reveal reveal-delay-2">
+        <div class="skill-block-title">Compliance Platforms</div>
+        <div class="skill-block-body">
+          <span>Microsoft Purview</span><span>Discovery Accelerator (Veritas)</span><span>Global Relay</span><span>Bloomberg Vault</span>
+        </div>
+      </div>
+      <div class="skill-block reveal reveal-delay-1">
+        <div class="skill-block-title">Cloud & Storage</div>
+        <div class="skill-block-body">
+          <span>Azure Blob Storage</span><span>Amazon S3</span>
+        </div>
+      </div>
+      <div class="skill-block reveal reveal-delay-2">
+        <div class="skill-block-title">Delivery & Collaboration</div>
+        <div class="skill-block-body">
+          <span>UAT/QA testing</span><span>Jira</span><span>ServiceNow</span><span>Cross-regional (APAC/EU/US) coordination</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">Journey</span>
+      <h2 class="section-title">The Path So Far</h2>
+      <p class="section-intro">From model-based testing in C/C++ to leading enterprise data investigations — this is the progression that taught me to spot problems before they scale.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal reveal-delay-1">
+        <div class="tl-date">SEP 2024 — MAR 2026</div>
+        <div class="tl-role">eDiscovery Technical Analyst <span style="color:var(--slate);font-weight:400;">(Client Secondment)</span></div>
+        <div class="tl-org">Barclays · Northampton, UK</div>
+        <div class="tl-body">
+          Supported enterprise eDiscovery operations, Microsoft Purview validation, Discovery Accelerator collections, and regulatory-compliant data collection from M365, Bloomberg Vault, and email platforms across global legal matters.
+        </div>
+      </div>
+      <div class="tl-item reveal reveal-delay-2">
+        <div class="tl-date">APR 2024 — PRESENT</div>
+        <div class="tl-role">Senior Data Analyst</div>
+        <div class="tl-org">Consilio LLC · Bengaluru, India</div>
+        <div class="tl-body">
+          Led enterprise eDiscovery investigations, workflow automation initiatives, designed and modified SQL queries to accommodate custom client requirements, UAT, analyst mentoring, and delivery management across global projects.
+        </div>
+      </div>
+      <div class="tl-item reveal reveal-delay-3">
+        <div class="tl-date">2021 — 2024</div>
+        <div class="tl-role">Data Operations Associate → Data Analyst</div>
+        <div class="tl-org">Consilio LLC · Bengaluru, India</div>
+        <div class="tl-body">
+          Built foundational expertise in Relativity data loading, SQL-based metadata mapping, and
+          end-to-end eDiscovery workflows.
+        </div>
+      </div>
+      <div class="tl-item reveal reveal-delay-1">
+        <div class="tl-date">NOV 2020 — MAR 2021</div>
+        <div class="tl-role">Associate Engineer (Intern)</div>
+        <div class="tl-org">L&amp;T Technology Services · India</div>
+        <div class="tl-body">Model-based testing and embedded systems work in C/C++.</div>
+      </div>
+      <div class="tl-item reveal reveal-delay-2">
+        <div class="tl-date">2016 — 2020</div>
+        <div class="tl-role">B.Tech, Electronics &amp; Communication Engineering</div>
+        <div class="tl-org">REVA University, Bengaluru · CGPA 7.26/10</div>
+        <div class="tl-body"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="beyond">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">Balance</span>
+      <h2 class="section-title">Away From the Screen</h2>
+      <p class="section-intro">The same discipline that keeps a data investigation on track keeps me grounded outside work.</p>
+    </div>
+    <div class="grid-beyond">
+      <div class="beyond-card reveal reveal-delay-1" style="--accent:#FF8A4C">
+        <span class="beyond-icon">🏔️</span>
+        <span class="beyond-title">Trekking</span>
+        <p class="beyond-sub">Most weekends, when the schedule allows — the same pattern-spotting that works on a dataset works on a trail.</p>
+      </div>
+      <div class="beyond-card reveal reveal-delay-2" style="--accent:#FF8A4C">
+        <span class="beyond-icon">🏋️</span>
+        <span class="beyond-title">Fitness</span>
+        <p class="beyond-sub">Push-Pull-Legs-Upper-Lower split, five active days a week.</p>
+      </div>
+      <div class="beyond-card reveal reveal-delay-3" style="--accent:#2DD4E0">
+        <span class="beyond-icon">🏏</span>
+        <span class="beyond-title">Sports</span>
+        <p class="beyond-sub">Cricket, on and off the field.</p>
+      </div>
+      <div class="beyond-card reveal reveal-delay-1" style="--accent:#FF5D73">
+        <span class="beyond-icon">📷</span>
+        <span class="beyond-title">Photography</span>
+        <p class="beyond-sub">Mostly landscapes — a habit that overlaps with the trekking more than I'd like to admit.</p>
+      </div>
+      <div class="beyond-card reveal reveal-delay-2" style="--accent:#FF8A4C">
+        <span class="beyond-icon">🏊</span>
+        <span class="beyond-title">Swimming</span>
+        <p class="beyond-sub">Low-impact recovery that still counts as training.</p>
+      </div>
+      <div class="beyond-card reveal reveal-delay-3" style="--accent:#2DD4E0">
+        <span class="beyond-icon">📚</span>
+        <span class="beyond-title">Reading</span>
+        <p class="beyond-sub">Non-fiction mostly — the same curiosity that drives the day job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <span class="section-overline">Connect</span>
+      <h2 class="section-title">Start a Conversation</h2>
+      <p class="section-intro">If you are building something complex with data, I would love to hear about it.</p>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-links">
+        <a href="mailto:pranavbhardhwaj98@gmail.com">
+          <span class="link-icon">✉️</span>
+          <span>pranavbhardhwaj98@gmail.com</span>
+        </a>
+        <a href="tel:+918197183473">
+          <span class="link-icon">📱</span>
+          <span>+91 81971 83473</span>
+        </a>
+        <a href="https://www.linkedin.com/in/pranav-bhardhwaj-57a05a179/" target="_blank" rel="noopener">
+          <span class="link-icon">💼</span>
+          <span>LinkedIn — /in/pranav-bhardhwaj</span>
+        </a>
+      </div>
+      <div class="stamp">ACTIVELY REVIEWING OFFERS</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Bengaluru, Karnataka, India
+</footer>
+
+<script>
+  // Scroll reveal observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
